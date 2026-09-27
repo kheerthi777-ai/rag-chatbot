@@ -1,0 +1,11 @@
+advice:
+I can only share facts from the indexed scheme pages, not whether to buy, sell, or hold. For the published scheme details, see {url}.
+
+returns:
+I don’t calculate or compare returns. The latest published figures are on the scheme page: {url}.
+
+pii:
+Don’t send PAN, Aadhaar, account numbers, OTPs, email, or phone numbers. I can’t look up your account. Ask a general question such as how capital-gains statements are downloaded.
+
+not_found:
+I can’t find that in the five indexed HDFC scheme pages. I won’t guess a figure.

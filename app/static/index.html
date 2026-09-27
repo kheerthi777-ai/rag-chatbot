@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HDFC scheme facts</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --groww-green: #00d09c;
+      --dark-bg: #070c18;
+      --dark-surface: #0b1326;
+      --dark-surface-bright: #131b2e;
+      --dark-border: #1e293b;
+      --bg: var(--dark-bg);
+      --panel: var(--dark-surface);
+      --card: var(--dark-surface-bright);
+      --line: var(--dark-border);
+      --text: #e8f4f8;
+      --muted: #8aa3b0;
+      --green: var(--groww-green);
+      --green-2: var(--groww-green);
+      --red: #ff5d73;
+      --red-dim: #2a1520;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+    button, textarea { font: inherit; color: inherit; }
+    button { cursor: pointer; }
+    a { color: var(--green); text-decoration: none; }
+    .wrap { max-width: 1280px; margin: 0 auto; padding: 14px 16px 24px; }
+    .nav, .banner, .row, .split { display: flex; gap: 10px; align-items: center; }
+    .nav { flex-wrap: wrap; margin-bottom: 10px; }
+    .brand { display: flex; gap: 10px; align-items: center; margin-right: 6px; }
+    .logo, .hdfc {
+      width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center;
+      background: #12352c; color: var(--green); font-weight: 700; border: 1px solid #1e6b4e;
+    }
+    .brand b { display: block; font-size: 14px; }
+    .brand small, .muted, .kicker, .label { color: var(--muted); }
+    .brand small { font-size: 11px; }
+    .pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      border: 1px solid var(--line); background: #0c1a24; border-radius: 999px;
+      padding: 6px 10px; font-size: 12px; color: var(--muted); white-space: nowrap;
+    }
+    .pill strong { color: var(--text); font-weight: 600; }
+    .pill.active { background: #12352c; border-color: #1e6b4e; color: var(--green); }
+    .pill.alert { background: #2a1520; border-color: #6e2c3a; color: var(--red); }
+    .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); display: inline-block; }
+    .banner {
+      justify-content: space-between; border: 1px solid var(--line); background: #0c1a24;
+      border-radius: 12px; padding: 10px 14px; margin-bottom: 12px; font-size: 13px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+    .main, .side {
+      background: var(--dark-surface);
+      border: 1px solid var(--dark-border);
+      border-radius: 16px;
+      min-width: 0;
+    }
+    .main { display: flex; flex-direction: column; padding: 14px; }
+    .side { padding: 14px; }
+    @media (min-width: 1024px) {
+      .grid { grid-template-columns: repeat(12, minmax(0, 1fr)); }
+      .main { grid-column: span 8; }
+      .side { grid-column: span 4; }
+    }
+    .head { display: flex; justify-content: space-between; gap: 12px; align-items: flex-start; }
+    h1, h2 { margin: 0; }
+    h1 { font-size: 20px; }
+    h2 { font-size: 16px; }
+    .sub { margin: 4px 0 0; color: var(--muted); font-size: 13px; }
+    .welcome, .card, .q-card, .trace-box, .step, .chunk, .scheme, .composer {
+      border: 1px solid var(--line); background: var(--card); border-radius: 14px;
+    }
+    .welcome { margin: 12px 0; padding: 12px 14px; color: var(--muted); font-size: 14px; }
+    .label { font-size: 11px; letter-spacing: 0.06em; margin: 4px 0 8px; }
+    .suggest { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .q-card { text-align: left; padding: 12px; min-height: 72px; background: #0e1c28; }
+    .q-card:hover { border-color: #1e6b4e; }
+    .q-card.bad { border-color: #6e2c3a; }
+    .q-card span { color: var(--green); }
+    .q-card.bad span { color: #ffb4c0; }
+    .tag { float: right; font-size: 11px; color: var(--red); border: 1px solid #6e2c3a; border-radius: 999px; padding: 2px 8px; }
+    .thread { display: flex; flex-direction: column; gap: 12px; margin: 14px 0; }
+    .ask-bubble { align-self: flex-end; max-width: 78%; background: #102433; border: 1px solid #1e4d62; border-radius: 14px; padding: 10px 12px; }
+    .ask-bubble .kicker { display: flex; justify-content: space-between; gap: 16px; color: var(--green); font-size: 11px; letter-spacing: 0.05em; }
+    .reply { padding: 12px; }
+    .reply.ok { border-color: #1e6b4e; background: #0e221e; }
+    .reply.no { border-color: #6e2c3a; background: var(--red-dim); }
+    .reply-head, .src-row { display: flex; justify-content: space-between; gap: 8px; align-items: center; font-size: 12px; }
+    .reply-head b.ok { color: var(--green); }
+    .reply-head b.no { color: var(--red); }
+    .chip { border: 1px solid var(--line); border-radius: 999px; padding: 3px 8px; color: var(--muted); }
+    .metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
+    .metric { background: #0b1620; border: 1px solid var(--line); border-radius: 12px; padding: 10px; }
+    .metric span { display: block; color: var(--muted); font-size: 11px; letter-spacing: 0.04em; }
+    .metric strong { display: block; margin-top: 6px; color: var(--green); font-size: 20px; }
+    .src-row { margin-top: 10px; color: var(--muted); }
+    .src-row a { overflow-wrap: anywhere; }
+    .factsheet {
+      display: inline-block; margin-top: 10px; border: 1px solid var(--line); border-radius: 10px; padding: 6px 10px; color: var(--text);
+    }
+    .composer { display: flex; gap: 8px; padding: 8px; margin-top: auto; }
+    textarea { flex: 1; min-height: 46px; resize: none; border: 0; outline: none; background: transparent; }
+    .go {
+      border: 0; border-radius: 12px; padding: 0 16px; background: var(--green-2); color: #042016; font-weight: 700;
+    }
+    .go:disabled, .q-card:disabled { opacity: 0.55; cursor: wait; }
+    .fine { display: flex; justify-content: space-between; gap: 8px; margin-top: 8px; color: var(--muted); font-size: 12px; }
+    .guard { color: var(--green); border: 1px solid #1e6b4e; border-radius: 999px; padding: 3px 8px; }
+    .side-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
+    .ms { color: var(--green); border: 1px solid #1e6b4e; border-radius: 999px; padding: 6px 10px; font-size: 12px; }
+    .trace-box, .step, .chunk, .scheme { padding: 12px; margin-bottom: 8px; }
+    .trace-box { color: var(--green); }
+    .step { display: block; }
+    .step .row { justify-content: space-between; }
+    .num {
+      width: 22px; height: 22px; border-radius: 50%; display: inline-grid; place-items: center;
+      background: #12352c; color: var(--green); font-size: 12px; margin-right: 8px;
+    }
+    .bar { height: 8px; border-radius: 999px; background: #0b1620; margin-top: 8px; overflow: hidden; }
+    .bar i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, #0e8f62, var(--green)); }
+    .chunk { color: var(--muted); font-size: 13px; }
+    .scheme { display: flex; justify-content: space-between; align-items: center; }
+    .direct { color: var(--green); border: 1px solid #1e6b4e; border-radius: 999px; padding: 2px 8px; font-size: 12px; }
+    .foot { display: flex; justify-content: space-between; margin-top: 10px; color: var(--muted); font-size: 12px; }
+    @media (max-width: 1023px) {
+      .suggest { display: block; }
+      .q-card { width: 100%; margin-bottom: 8px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="nav">
+      <div class="brand">
+        <div class="logo">G</div>
+        <div><b>HDFC facts</b><small>Scheme fact assistant</small></div>
+      </div>
+      <span class="pill" id="chroma-pill"><i class="dot"></i> ChromaDB</span>
+      <span class="pill" id="chunk-pill">Passages</span>
+      <span class="pill">all-MiniLM-L6-v2</span>
+      <span class="pill active">Chat</span>
+      <span class="pill">5 schemes</span>
+      <span class="pill">Query inspector</span>
+      <span class="pill alert">Facts-only · No advice</span>
+      <div class="hdfc" title="HDFC">H</div>
+    </header>
+    <div class="banner">
+      <span>Facts-only. No investment advice. Answers come from the five indexed Groww pages and can be outdated.</span>
+      <span id="synced">Indexed pages</span>
+    </div>
+    <div class="grid">
+      <section class="main">
+        <div class="head">
+          <div>
+            <h1>HDFC mutual fund facts</h1>
+            <p class="sub">Direct–Growth pages · Expense ratio, exit load, SIP, lock-in, benchmark</p>
+          </div>
+          <span class="pill active">Facts only</span>
+        </div>
+        <p class="welcome">Ask about ELSS lock-in, expense ratios, benchmarks, minimum SIP, or how a statement is downloaded. Buy, sell, and return comparisons are refused.</p>
+        <div class="label">SUGGESTED QUESTIONS</div>
+        <div class="suggest">
+          <button class="q-card" type="button" data-question="What is the lock-in period and minimum SIP for HDFC ELSS Tax Saver?"><span>What is the lock-in period and minimum SIP for HDFC ELSS Tax Saver?</span></button>
+          <button class="q-card" type="button" data-question="What is the expense ratio and benchmark of HDFC Small Cap Fund?"><span>What is the expense ratio and benchmark of HDFC Small Cap Fund?</span></button>
+          <button class="q-card" type="button" data-question="How do I download a capital-gains statement?"><span>How do I download a capital-gains statement?</span></button>
+          <button class="q-card bad" type="button" data-question="Should I invest in HDFC Flexi Cap now?"><span>Should I invest in HDFC Flexi Cap now?</span><em class="tag">Refusal test</em></button>
+        </div>
+        <div class="thread" id="thread"></div>
+        <form class="composer" id="form">
+          <label for="question" style="position:absolute;left:-9999px">Ask a factual question</label>
+          <textarea id="question" placeholder="Ask a factual question about an HDFC scheme (exit load, expense ratio, lock-in)…"></textarea>
+          <button class="go" id="ask" type="submit">Query →</button>
+        </form>
+        <div class="fine">
+          <span>No PAN, Aadhaar, account numbers, OTPs, email, or phone numbers. At most 3 sentences.</span>
+          <span class="guard">Guardrail active</span>
+        </div>
+      </section>
+      <aside class="side">
+        <div class="side-head">
+          <div>
+            <h2>Query inspector</h2>
+            <p class="sub">Retrieval and guardrails</p>
+          </div>
+          <span class="ms" id="elapsed">—</span>
+        </div>
+        <div class="label">ACTIVE QUESTION</div>
+        <div class="trace-box" id="trace-q">Ask a question to see the steps.</div>
+        <div class="label">RETRIEVAL STEPS</div>
+        <div id="steps"></div>
+        <div class="label">CLOSEST PASSAGE</div>
+        <div class="chunk" id="payload">No passage yet.</div>
+        <div class="row" style="justify-content:space-between;margin:12px 0 8px">
+          <h2>5 indexed schemes</h2>
+          <span class="direct">Direct–Growth</span>
+        </div>
+        <div id="schemes"></div>
+      </aside>
+    </div>
+    <div class="foot">
+      <span>Indexed Groww pages only. Not investment advice.</span>
+      <span id="model-foot">all-MiniLM-L6-v2</span>
+    </div>
+  </div>
+  <script>
+    const thread = document.getElementById("thread");
+    const box = document.getElementById("question");
+    const askButton = document.getElementById("ask");
+    const chips = document.querySelectorAll(".q-card");
+    const traceQ = document.getElementById("trace-q");
+    const steps = document.getElementById("steps");
+    const payload = document.getElementById("payload");
+    const elapsed = document.getElementById("elapsed");
+
+    function timeNow() {
+      return new Date().toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
+    }
+    function similarity(distance) {
+      if (typeof distance !== "number") return null;
+      return Math.max(0, 1 - distance);
+    }
+    function metricsFrom(data) {
+      const text = ((data.trace && data.trace.hits) || []).map((hit) => hit.excerpt || "").join(" ");
+      const patterns = [
+        ["Expense ratio", /Expense ratio:\s*([0-9.]+%)/i],
+        ["Minimum SIP", /Minimum SIP:\s*([0-9]+)/i],
+        ["Lock-in", /Lock-in:\s*([^.]+)/i],
+        ["Benchmark", /Benchmark:\s*([^.]+)/i],
+        ["Exit load", /Exit load(?: of|:)\s*([^.]+)/i],
+        ["Riskometer", /Riskometer:\s*([^.]+)/i]
+      ];
+      return patterns.flatMap(([label, pattern]) => {
+        const match = text.match(pattern);
+        return match ? [{ label, value: match[1].trim() }] : [];
+      }).slice(0, 2);
+    }
+    function shortUrl(url) {
+      try {
+        const parsed = new URL(url);
+        const path = parsed.pathname.replace("/mutual-funds/", "");
+        return parsed.host + "/…/" + path;
+      } catch (error) {
+        return url;
+      }
+    }
+
+    function renderTrace(question, data, ms) {
+      const trace = data.trace || { guardrail: "error", hits: [] };
+      const refused = trace.guardrail === "refused";
+      const best = similarity(trace.distance);
+      traceQ.textContent = "“" + question + "”";
+      elapsed.textContent = typeof ms === "number" ? Math.round(ms) + " ms total" : "—";
+      const rows = [
+        ["1", "Embed the question", refused ? "Skipped" : "all-MiniLM-L6-v2 · 384 dimensions"],
+        ["2", "Search the index", refused ? "Skipped" : (best === null ? "No close passage" : "Similarity " + best.toFixed(3))],
+        ["3", "Advice and identity check", refused ? "Refused" : "Passed · " + (trace.hits || []).length + " passages"]
+      ];
+      steps.replaceChildren();
+      rows.forEach(([num, title, detail]) => {
+        const card = document.createElement("div");
+        card.className = "step";
+        const top = document.createElement("div");
+        top.className = "row";
+        const left = document.createElement("div");
+        const n = document.createElement("span");
+        n.className = "num";
+        n.textContent = num;
+        const name = document.createElement("b");
+        name.textContent = title;
+        left.append(n, name);
+        top.appendChild(left);
+        const line = document.createElement("div");
+        line.className = "muted";
+        line.style.margin = "6px 0 0 30px";
+        line.textContent = detail;
+        card.append(top, line);
+        if (num === "2" && best !== null) {
+          const bar = document.createElement("div");
+          bar.className = "bar";
+          const fill = document.createElement("i");
+          fill.style.width = Math.round(best * 100) + "%";
+          bar.appendChild(fill);
+          card.appendChild(bar);
+        }
+        steps.appendChild(card);
+      });
+      const hit = (trace.hits || [])[0];
+      payload.replaceChildren();
+      if (!hit) {
+        payload.textContent = refused ? "No passage was retrieved. The question was refused first." : "No passage was used.";
+        return;
+      }
+      const id = document.createElement("div");
+      id.className = "row";
+      const idText = document.createElement("b");
+      idText.textContent = hit.id || "passage";
+      const words = document.createElement("span");
+      words.className = "chip";
+      words.textContent = ((hit.excerpt || "").trim().split(/\s+/).filter(Boolean).length) + " words";
+      id.append(idText, words);
+      const quote = document.createElement("p");
+      quote.textContent = hit.excerpt || "";
+      const uri = document.createElement("div");
+      uri.textContent = hit.source_url ? "Source: " + shortUrl(hit.source_url) : "";
+      payload.append(id, quote, uri);
+    }
+
+    function addTurn(question, data, ms) {
+      const asked = document.createElement("article");
+      asked.className = "ask-bubble";
+      const kicker = document.createElement("div");
+      kicker.className = "kicker";
+      const who = document.createElement("span");
+      who.textContent = "QUESTION";
+      const when = document.createElement("span");
+      when.textContent = timeNow();
+      kicker.append(who, when);
+      const q = document.createElement("p");
+      q.textContent = question;
+      asked.append(kicker, q);
+      thread.appendChild(asked);
+
+      const refused = data.kind && data.kind.startsWith("refused");
+      const reply = document.createElement("article");
+      reply.className = "reply " + (refused ? "no" : "ok");
+      const head = document.createElement("div");
+      head.className = "reply-head";
+      const title = document.createElement("b");
+      title.className = refused ? "no" : "ok";
+      title.textContent = refused ? "Advice check refused" : (data.kind === "not_found" ? "Not in the indexed pages" : "Facts verified");
+      const meta = document.createElement("span");
+      const hit = data.trace && data.trace.hits && data.trace.hits[0];
+      const score = similarity(data.trace && data.trace.distance);
+      meta.textContent = [hit && hit.id, score !== null ? "similarity " + score.toFixed(3) : ""].filter(Boolean).join(" · ");
+      head.append(title, meta);
+      const text = document.createElement("p");
+      text.textContent = data.text || "";
+      reply.append(head, text);
+      const tiles = data.kind === "answer" ? metricsFrom(data) : [];
+      if (tiles.length) {
+        const grid = document.createElement("div");
+        grid.className = "metrics";
+        tiles.forEach((item) => {
+          const card = document.createElement("div");
+          card.className = "metric";
+          const label = document.createElement("span");
+          label.textContent = item.label;
+          const value = document.createElement("strong");
+          value.textContent = item.value;
+          card.append(label, value);
+          grid.appendChild(card);
+        });
+        reply.appendChild(grid);
+      }
+      if (data.source_url) {
+        const source = document.createElement("div");
+        source.className = "src-row";
+        const link = document.createElement("a");
+        link.href = data.source_url;
+        link.target = "_blank";
+        link.rel = "noopener";
+        link.textContent = "Source: " + shortUrl(data.source_url);
+        source.appendChild(link);
+        if (data.fetched_at) {
+          const date = document.createElement("span");
+          date.textContent = "Last updated " + data.fetched_at;
+          source.appendChild(date);
+        }
+        reply.appendChild(source);
+        if (refused) {
+          const button = document.createElement("a");
+          button.className = "factsheet";
+          button.href = data.source_url;
+          button.target = "_blank";
+          button.rel = "noopener";
+          button.textContent = "View scheme page";
+          reply.appendChild(button);
+        }
+      }
+      thread.appendChild(reply);
+      reply.scrollIntoView({ block: "nearest" });
+      renderTrace(question, data, ms);
+    }
+
+    async function submitQuestion(text) {
+      const question = text.trim();
+      if (!question) return;
+      askButton.disabled = true;
+      chips.forEach((chip) => { chip.disabled = true; });
+      const started = performance.now();
+      try {
+        const response = await fetch("/ask", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ question })
+        });
+        const payload = await response.json();
+        addTurn(question, payload, performance.now() - started);
+        if (payload.kind === "refused_pii") box.value = "";
+      } catch (error) {
+        addTurn(question, { kind: "error", text: "The answer service failed. Your question was not saved.", trace: { guardrail: "error", hits: [] } }, performance.now() - started);
+      } finally {
+        askButton.disabled = false;
+        chips.forEach((chip) => { chip.disabled = false; });
+      }
+    }
+
+    document.getElementById("form").addEventListener("submit", (event) => {
+      event.preventDefault();
+      submitQuestion(box.value);
+    });
+    chips.forEach((chip) => chip.addEventListener("click", () => {
+      box.value = chip.dataset.question;
+      submitQuestion(chip.dataset.question);
+    }));
+
+    fetch("/status").then((response) => response.json()).then((status) => {
+      document.getElementById("chroma-pill").lastChild.textContent = status.ready
+        ? " ChromaDB " + (status.chroma_version || "") + " connected"
+        : " Index unavailable";
+      document.getElementById("chunk-pill").textContent = status.chunks + " passages indexed";
+      document.getElementById("synced").textContent = status.synced ? "Indexed " + status.synced + " · 5 pages" : "5 pages";
+      const list = document.getElementById("schemes");
+      status.schemes.forEach((scheme, index) => {
+        const row = document.createElement("div");
+        row.className = "scheme";
+        const name = document.createElement("span");
+        name.textContent = (index + 1) + ". " + scheme.scheme_name;
+        const tag = document.createElement("span");
+        tag.className = "direct";
+        tag.textContent = "Direct";
+        row.append(name, tag);
+        list.appendChild(row);
+      });
+    }).catch(() => {
+      document.getElementById("chroma-pill").textContent = "Index unavailable";
+    });
+  </script>
+</body>
+</html>
