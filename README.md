@@ -32,6 +32,12 @@ python -m uvicorn app.main:app --reload
 
 Then open http://127.0.0.1:8000/
 
+## Hosting
+
+The public copy runs on Render from `render.yaml`. The build installs dependencies and runs `python -m ingest`, which indexes the saved pages in `data/raw/`. The service listens on Render's `PORT`.
+
+The free instance has 512 MB of RAM and sleeps when idle. The first question after a sleep takes longer because the embedding model loads then. Questions still use the same facts-only path as the local app.
+
 `python -m ingest` reads the saved pages in `data/raw/`. Add `--refresh` only when you want to download the five Groww pages again. A second ingest replaces cards for the same schemes. It does not duplicate them.
 
 If no chat model is configured, answers are taken from the closest saved passage and shortened to three sentences. Refusals do not use a chat model.

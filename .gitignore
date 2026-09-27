@@ -1,6 +1,7 @@
 data/chroma/
 data/events.log
 .env
+.cache/
 __pycache__/
 .pytest_cache/
 .venv/
